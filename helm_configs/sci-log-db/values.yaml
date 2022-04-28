@@ -1,0 +1,45 @@
+replicaCount: 1
+
+image:
+  repository: "{{ .Values.ciRepository }}"
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "{{ .Values.ciTag }}"
+
+service:
+  type: ClusterIP
+  externalPort: 80
+  internalPort: 3000
+
+ingress:
+  enabled: true
+  annotations: 
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: "{{ .Values.host }}"
+      paths: 
+        - path: /api
+          pathType: Prefix
+  tls:
+    - hosts:
+      - "{{ .Values.host }}"
+      secretName: "scilog-certificate"
+
+volumes:
+  - name: secrets-volume
+    secret:
+      secretName: "{{ .Release.Name }}-s"
+
+secrets: 
+  "{{ .Release.Name }}-s":
+    type: Opaque
+    data: 
+      datasource.json: '${{ secrets.DATASOURCE }}'
+env:
+  BASE_PATH: /api/v1
+
+volumeMounts:
+  - name: secrets-volume
+    mountPath: /home/node/app/datasource.json
+    subPath: datasource.json
