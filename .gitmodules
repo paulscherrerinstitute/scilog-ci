@@ -1,0 +1,3 @@
+[submodule "scilog"]
+	path = scilog
+	url = https://github.com/paulscherrerinstitute/scilog.git
