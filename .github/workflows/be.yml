@@ -11,11 +11,11 @@ on:
 jobs:
 
   set_env: 
-    uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.environment.yml
+    uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.environment.yml@main
 
   check_changed:
     needs: set_env
-    uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.changes.yml
+    uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.changes.yml@main
     with: 
       files: | 
         .github/workflows/be.yml
@@ -27,7 +27,7 @@ jobs:
     needs: 
      - check_changed
      - set_env
-    uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.build-deploy-scicat-component.yml
+    uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.build-deploy-scicat-component.yml@main
     with: 
       context: scilog/sci_log_db/.
       image_name: ${{ github.repository }}/be
