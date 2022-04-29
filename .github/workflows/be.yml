@@ -1,0 +1,40 @@
+name: be
+
+on:  
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+  release:
+    types: [ published ]
+
+jobs:
+
+  set_env: 
+    uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.environment.yml
+
+  check_changed:
+    needs: set_env
+    uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.changes.yml
+    with: 
+      files: | 
+        .github/workflows/be.yml
+        helm_configs/sci_log_db/${{ needs.set_env.outputs.environment }}/**
+        helm_configs/sci_log_db/values.yaml
+        scilog/sci_log_db/**
+  build_deploy_scicat_oaipmh:
+    if: (needs.check_changed.outputs.changed == 'true' && !needs.set_env.outputs.component) || needs.set_env.outputs.component == 'be'
+    needs: 
+     - check_changed
+     - set_env
+    uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.build-deploy-scicat-component.yml
+    with: 
+      context: scilog/sci_log_db/.
+      image_name: ${{ github.repository }}/be
+      release_name: backend
+      namespace_prefix: scilog-
+      tag: ${{ needs.set_env.outputs.tag }}
+      environment: ${{ needs.set_env.outputs.environment }}
+    secrets:
+      KUBECONFIG: ${{ secrets.KUBECONFIG }}
+      JSON_SECRETS: ${{ toJSON(secrets) }}
