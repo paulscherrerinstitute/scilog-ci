@@ -21,7 +21,7 @@ jobs:
         .github/workflows/be.yml
         helm_configs/sci_log_db/${{ needs.set_env.outputs.environment }}/**
         helm_configs/sci_log_db/values.yaml
-        scilog/sci_log_db/**
+        scilog/sci-log-db/**
 
   build_deploy_be:
     if: (needs.check_changed.outputs.changed == 'true' && !needs.set_env.outputs.component) || needs.set_env.outputs.component == 'be'
@@ -30,7 +30,7 @@ jobs:
      - set_env
     uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.build-deploy-scicat-component.yml@main
     with: 
-      context: scilog/sci_log_db/.
+      context: scilog/sci-log-db/.
       image_name: ${{ github.repository }}/be
       release_name: backend
       namespace_prefix: scilog-
