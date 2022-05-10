@@ -37,7 +37,8 @@ secrets:
     data: 
       datasource.json: '${{ secrets.DATASOURCE }}'
 env:
-  BASE_PATH: /api/v1
+  - name: BASE_PATH
+    value: /api/v1
 
 volumeMounts:
   - name: secrets-volume
