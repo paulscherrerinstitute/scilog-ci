@@ -22,6 +22,7 @@ jobs:
         helm_configs/sci_log_db/${{ needs.set_env.outputs.environment }}/**
         helm_configs/sci_log_db/values.yaml
         scilog/sci_log_db/**
+
   build_deploy_be:
     if: (needs.check_changed.outputs.changed == 'true' && !needs.set_env.outputs.component) || needs.set_env.outputs.component == 'be'
     needs: 
