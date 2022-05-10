@@ -19,8 +19,8 @@ jobs:
     with: 
       files: | 
         .github/workflows/be.yml
-        helm_configs/sci_log_db/${{ needs.set_env.outputs.environment }}/**
-        helm_configs/sci_log_db/values.yaml
+        helm_configs/backend/${{ needs.set_env.outputs.environment }}/**
+        helm_configs/backend/values.yaml
         scilog/sci-log-db/**
 
   build_deploy_be:
