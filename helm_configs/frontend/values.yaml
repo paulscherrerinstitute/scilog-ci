@@ -26,6 +26,10 @@ ingress:
       - "{{ .Values.host }}"
       secretName: "scilog-certificate"
 
+configMaps: 
+  "{{ .Release.Name }}-cm":
+    config.json: "{{ .Values.ciVars.CONFIG }}"
+
 volumes:
   - name: config-volume
     configMap:
