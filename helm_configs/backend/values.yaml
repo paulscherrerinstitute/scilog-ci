@@ -37,6 +37,7 @@ secrets:
     type: Opaque
     data: 
       datasource.json: '${{ secrets.DATASOURCE }}'
+      functionalAccounts.json: '${{ secrets.FUNCTIONAL_ACCOUNTS }}'
 env:
   - name: BASE_PATH
     value: /api/v1
@@ -45,3 +46,6 @@ volumeMounts:
   - name: secrets-volume
     mountPath: /home/node/app/datasource.json
     subPath: datasource.json
+  - name: secrets-volume
+    mountPath: /home/node/app/functionalAccounts.json
+    subPath: functionalAccounts.json
