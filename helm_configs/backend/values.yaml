@@ -36,8 +36,9 @@ secrets:
   "{{ .Release.Name }}-s":
     type: Opaque
     data: 
-      datasource.json: '${{ secrets.DATASOURCE }}'
       functionalAccounts.json: '${{ secrets.FUNCTIONAL_ACCOUNTS }}'
+      datasource.json: '${{ secrets.DATASOURCE }}'
+
 env:
   - name: BASE_PATH
     value: /api/v1
