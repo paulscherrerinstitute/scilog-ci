@@ -55,6 +55,7 @@ jobs:
     needs: 
      - check_changed
      - set_env
+     - set_ci_vars
     uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.build-deploy-scicat-component.yml@main
     with: 
       context: scilog/scilog/.
