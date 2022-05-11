@@ -59,6 +59,7 @@ jobs:
     with: 
       context: scilog/scilog/.
       image_name: ${{ github.repository }}/fe
+      helm_ci_vars: ${{ needs.set_ci_vars.outputs.ciVars }}
       release_name: frontend
       namespace_prefix: scilog-
       tag: ${{ needs.set_env.outputs.tag }}
