@@ -1,0 +1,6 @@
+host: scilog.qa.psi.ch
+
+config: |
+  {
+    "lbBaseURL": "https://scilog.qa.psi.ch/api/v1/"
+  }
