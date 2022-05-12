@@ -28,8 +28,8 @@ ingress:
 
 configMaps: 
   "{{ .Release.Name }}-cm":
-    config.json: "{{ .Values.ciVars.CONFIG }}"
-
+    config.json: "{{ .Values.config | indent 4 }}"
+    
 volumes:
   - name: config-volume
     configMap:
