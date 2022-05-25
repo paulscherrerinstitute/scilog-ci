@@ -2,5 +2,9 @@ host: scilog.development.psi.ch
 
 config: |
   {
-    "lbBaseURL": "https://scilog.development.psi.ch/api/v1/"
+    "lbBaseURL": "https://scilog.development.psi.ch/api/v1/",
+    "oAuth2Endpoint": {
+        "authURL": "auth/thirdparty/keycloak",
+        "displayText": "keycloak"
+    }
   }
