@@ -37,6 +37,7 @@ secrets:
     data: 
       datasource.json: '${{ secrets.DATASOURCE }}'
       oidc.json: '${{ secrets.OIDC }}'
+      functionalAccounts.json: '${{ secrets.FUNCTIONAL_ACCOUNTS }}'
 
 env:
   - name: BASE_PATH
@@ -49,3 +50,6 @@ volumeMounts:
   - name: secrets-volume
     mountPath: /home/node/app/oidc.json
     subPath: oidc.json
+  - name: secrets-volume
+    mountPath: /home/node/app/functionalAccounts.json
+    subPath: functionalAccounts.json
