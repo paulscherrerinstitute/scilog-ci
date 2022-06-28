@@ -1,0 +1,20 @@
+image:
+  repository: "{{ .Values.ciRepository }}"
+  pullPolicy: Always
+  tag: "{{ .Values.ciTag }}"
+
+secrets: 
+  "{{ .Release.Name }}-s":
+    type: Opaque
+    data: 
+      .env: '${{ secrets.PSYNC_ENV }}'
+
+volumes:
+  - name: secrets-volume
+    secret:
+      secretName: "{{ .Release.Name }}-s"
+
+volumeMounts:
+  - name: secrets-volume
+    mountPath: /usr/src/app/.env
+    subPath: .env

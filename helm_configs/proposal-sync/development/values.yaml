@@ -1,0 +1,3 @@
+cronjob:
+  restartPolicy: OnFailure
+  schedule: 33 8 * * 4
