@@ -1,0 +1,42 @@
+name: proposal-sync
+
+on:  
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+  release:
+    types: [ published ]
+
+jobs:
+
+  set_env: 
+    uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.environment.yml@main
+
+  check_changed:
+    needs: set_env
+    uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.changes.yml@main
+    with: 
+      files: | 
+        .github/workflows/proposal-sync.yml
+        helm_configs/proposal-sync/${{ needs.set_env.outputs.environment }}/**
+        helm_configs/proposal-sync/values.yaml
+        scilog/sdk/python/py_scilog/**
+
+  build_deploy:
+    if: (needs.check_changed.outputs.changed == 'true' && !needs.set_env.outputs.component) || needs.set_env.outputs.component == 'ps'
+    needs: 
+     - check_changed
+     - set_env
+    uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.build-deploy-scicat-component.yml@main
+    with: 
+      context: scilog/sdk/python/py_scilog/.
+      image_name: ${{ github.repository }}/proposal-sync
+      release_name: proposal-sync
+      namespace_prefix: scilog-
+      tag: ${{ needs.set_env.outputs.tag }}
+      environment: ${{ needs.set_env.outputs.environment }}
+      helm_chart: cron_chart
+    secrets:
+      KUBECONFIG: ${{ secrets.KUBECONFIG }}
+      JSON_SECRETS: ${{ toJSON(secrets) }}
