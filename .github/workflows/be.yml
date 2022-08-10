@@ -15,7 +15,7 @@ jobs:
 
   check_changed:
     needs: set_env
-    uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.changes.yml@main
+    uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.changes.yml@check_changed
     with: 
       files: | 
         .github/workflows/be.yml
