@@ -1,6 +1,11 @@
-host: scilog-prod.qa.psi.ch
+host: scilog.psi.ch
 
 config: |
   {
-    "lbBaseURL": "https://scilog-prod.qa.psi.ch/api/v1/"
+    "lbBaseURL": "https://scilog.psi.ch/api/v1/",
+    "oAuth2Endpoint": {
+      "authURL": "auth/thirdparty/keycloak",
+      "displayText": "PSI account"
+    }
+
   }
