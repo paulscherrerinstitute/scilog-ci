@@ -9,35 +9,32 @@ on:
     types: [ published ]
 
 jobs:
+  proposal-sync:
+    name: proposal-sync
+    steps:
+    - name: set_env
+      uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.environment.yml@main
+    - name: check_changed
+      uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.changes.yml@main
+      with: 
+        files: | 
+          .github/workflows/proposal-sync.yml
+          helm_configs/proposal-sync/${{ steps.set_env.outputs.environment }}/**
+          helm_configs/proposal-sync/values.yaml
+          scilog/sdk/python/**
+          scilog/importTools/**
 
-  set_env: 
-    uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.environment.yml@main
-
-  check_changed:
-    needs: set_env
-    uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.changes.yml@main
-    with: 
-      files: | 
-        .github/workflows/proposal-sync.yml
-        helm_configs/proposal-sync/${{ needs.set_env.outputs.environment }}/**
-        helm_configs/proposal-sync/values.yaml
-        scilog/sdk/python/**
-        scilog/importTools/**
-
-  build_deploy:
-    if: (needs.check_changed.outputs.changed == 'true' && !needs.set_env.outputs.component) || needs.set_env.outputs.component == 'ps'
-    needs: 
-     - check_changed
-     - set_env
-    uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.build-deploy-scicat-component.yml@main
-    with: 
-      context: scilog/importTools/.
-      image_name: ${{ github.repository }}/proposal-sync
-      release_name: proposal-sync
-      namespace_prefix: scilog-
-      tag: ${{ needs.set_env.outputs.tag }}
-      environment: ${{ needs.set_env.outputs.environment }}
-      helm_chart: cron_chart
-    secrets:
-      KUBECONFIG: ${{ secrets.KUBECONFIG }}
-      JSON_SECRETS: ${{ toJSON(secrets) }}
+    - name: build_deploy
+      if: (steps.check_changed.outputs.changed == 'true' && !steps.set_env.outputs.component) || steps.set_env.outputs.component == 'ps'
+      uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.build-deploy-scicat-component.yml@main
+      with: 
+        context: scilog/importTools/.
+        image_name: ${{ github.repository }}/proposal-sync
+        release_name: proposal-sync
+        namespace_prefix: scilog-
+        tag: ${{ steps.set_env.outputs.tag }}
+        environment: ${{ steps.set_env.outputs.environment }}
+        helm_chart: cron_chart
+      secrets:
+        KUBECONFIG: ${{ secrets.KUBECONFIG }}
+        JSON_SECRETS: ${{ toJSON(secrets) }}
