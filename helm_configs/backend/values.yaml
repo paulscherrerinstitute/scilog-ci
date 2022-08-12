@@ -39,10 +39,16 @@ secrets:
       datasource.json: '${{ secrets.DATASOURCE }}'
       oidc.json: '${{ secrets.OIDC }}'
       functionalAccounts.json: '${{ secrets.FUNCTIONAL_ACCOUNTS }}'
+      jwt_secret: '${{ secrets.JWT_SECRET }}'
 
 env:
   - name: BASE_PATH
     value: /api/v1
+  - name: JWT_SECRET
+    valueFrom:
+      secretKeyRef: 
+        name: "{{ .Release.Name }}-s"
+        key: jwt_secret
 
 volumeMounts:
   - name: secrets-volume
