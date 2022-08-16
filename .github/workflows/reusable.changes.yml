@@ -57,7 +57,8 @@ jobs:
           git fetch origin/${{ inputs.submodule_commit }}
           git checkout ${{ inputs.submodule_commit }}
         
-      - name: Get changed files
+      - if: ${{ inputs.commit != github.sha }}
+        name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v17.3
         with: 
