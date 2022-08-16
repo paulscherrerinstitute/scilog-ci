@@ -34,6 +34,7 @@ jobs:
       tag: ${{ steps.variables.outputs.tag }}
       environment: ${{ steps.variables.outputs.environment }}
       component: ${{ steps.variables.outputs.component }}
+      commit: ${{ steps.variables.outputs.commit }}
     steps:
       - id: variables
         run: |
