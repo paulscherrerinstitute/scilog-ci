@@ -44,7 +44,7 @@ jobs:
             input_commit=${{ inputs.commit }}
             commit=${input_commit:-${{ github.sha }}}
             submodule_append=`[ -z ${{ inputs.submodule_commit }} ] || echo "_sha-${{ inputs.workflow_dispatch_submodule_commit }}" && echo ""`
-            tag="sha-${{ inputs.commit }}submodule_append"
+            tag="sha-${{ inputs.commit }}$submodule_append"
             environment=development
           elif [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]]; then
               tag="sha-${{ github.sha }}"
