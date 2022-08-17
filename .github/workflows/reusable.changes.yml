@@ -51,12 +51,14 @@ jobs:
           checkout_branch=`[[ $(git rev-parse --abbrev-ref HEAD) == "${{ inputs.main }}" ]] && echo "HEAD^" || echo "${{ inputs.main }}"`;
           git checkout $checkout_branch && git submodule update --recursive;
           git checkout $current_commit && git submodule update --recursive;
+
       - if: ${{ inputs.submodule_commit }}
-        run: |
-          cd ${{ inputs.submodule }}
-          git fetch origin ${{ inputs.submodule_commit }}
-          git checkout ${{ inputs.submodule_commit }}
-      
+        uses: ./.github/actions/checkout-submodule
+        with: 
+          submodule_commit: ${{ inputs.submodule_commit }}
+          commit: ${{ inputs.commit }}
+          submodule: ${{ inputs.submodule }}
+
       - if: ${{ inputs.submodule_commit }}
         uses: EndBug/add-and-commit@v9
         with:

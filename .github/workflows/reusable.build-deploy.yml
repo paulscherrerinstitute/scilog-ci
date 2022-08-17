@@ -74,11 +74,13 @@ jobs:
         submodules: recursive
         ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
         ref: ${{ inputs.commit }}
+
     - if: ${{ inputs.submodule_commit }}
-      run: |
-        cd ${{ inputs.submodule }}
-        git fetch origin ${{ inputs.submodule_commit }}
-        git checkout ${{ inputs.submodule_commit }}
+      uses: ./.github/actions/checkout-submodule
+      with: 
+        submodule_commit: ${{ inputs.submodule_commit }}
+        commit: ${{ inputs.commit }}
+        submodule: ${{ inputs.submodule }}
 
     - name: Copy docker build specific files
       run: |
