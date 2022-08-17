@@ -56,9 +56,17 @@ jobs:
           cd ${{ inputs.submodule }}
           git fetch origin/${{ inputs.submodule_commit }}
           git checkout ${{ inputs.submodule_commit }}
-        
+
+      - if: github.event_name == 'workflow_dispatch'
+        id: shas
+        run: | 
+          echo "::set-output name=sha::${{ inputs.commit }}"
+          echo "::set-output name=base_sha::$(git rev-parse ${{ inputs.main }})"
+
       - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v17.3
         with: 
           files: ${{ inputs.files }}
+          base_sha: ${{ steps.shas.outputs.base_sha }}
+          sha: ${{ steps.shas.outputs.sha }}
