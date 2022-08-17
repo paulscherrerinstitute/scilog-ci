@@ -58,7 +58,7 @@ jobs:
           git fetch origin/${{ inputs.submodule_commit }}
           git checkout ${{ inputs.submodule_commit }}
 
-      - if: github.event_name == "workflow_dispatch"
+      - if: github.event_name == 'workflow_dispatch'
         id: shas
         run: | 
           echo "::set-output name=sha::${{ inputs.commit }}"
