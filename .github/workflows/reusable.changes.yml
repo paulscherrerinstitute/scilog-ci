@@ -49,6 +49,7 @@ jobs:
       - run: |
           current_commit=`git rev-parse HEAD`;
           checkout_branch=`[[ $(git rev-parse --abbrev-ref HEAD) == "${{ inputs.main }}" ]] && echo "HEAD^" || echo "${{ inputs.main }}"`;
+          git checkout "${{ inputs.main }}" && git submodule update --recursive;
           git checkout $checkout_branch && git submodule update --recursive;
           git checkout $current_commit && git submodule update --recursive;
       - if: ${{ inputs.submodule_commit }}
@@ -56,9 +57,17 @@ jobs:
           cd ${{ inputs.submodule }}
           git fetch origin/${{ inputs.submodule_commit }}
           git checkout ${{ inputs.submodule_commit }}
-        
+
+      - if: ${{ github.event_name }}" == "workflow_dispatch" }}
+        id: shas
+        run: | 
+          echo "::set-output name=sha::${{ inputs.commit }}"
+          echo "::set-output name=base_sha::$(git rev-parse ${{ inputs.main }})"
+
       - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v26.1
         with: 
           files: ${{ inputs.files }}
+          base_sha: ${{ steps.shas.outputs.base_sha }}
+          sha: ${{ steps.shas.outputs.sha }}
