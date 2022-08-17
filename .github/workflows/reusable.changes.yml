@@ -56,7 +56,13 @@ jobs:
           cd ${{ inputs.submodule }}
           git fetch origin ${{ inputs.submodule_commit }}
           git checkout ${{ inputs.submodule_commit }}
-
+      
+      - if: ${{ inputs.submodule_commit }}
+        uses: EndBug/add-and-commit@v9
+        with:
+          default_author: github_actions
+          push: false
+      
       - if: github.event_name == 'workflow_dispatch'
         id: shas
         run: | 
