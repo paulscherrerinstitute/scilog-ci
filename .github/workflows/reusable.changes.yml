@@ -54,7 +54,7 @@ jobs:
       - if: ${{ inputs.submodule_commit }}
         run: |
           cd ${{ inputs.submodule }}
-          git fetch origin/${{ inputs.submodule_commit }}
+          git fetch origin ${{ inputs.submodule_commit }}
           git checkout ${{ inputs.submodule_commit }}
 
       - if: github.event_name == 'workflow_dispatch'
