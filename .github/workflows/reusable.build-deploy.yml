@@ -77,7 +77,7 @@ jobs:
     - if: ${{ inputs.submodule_commit }}
       run: |
         cd ${{ inputs.submodule }}
-        git fetch origin/${{ inputs.submodule_commit }}
+        git fetch origin ${{ inputs.submodule_commit }}
         git checkout ${{ inputs.submodule_commit }}
 
     - name: Copy docker build specific files
