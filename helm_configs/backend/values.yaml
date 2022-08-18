@@ -49,6 +49,8 @@ env:
       secretKeyRef: 
         name: "{{ .Release.Name }}-s"
         key: jwt_secret
+  - name: DEBUG
+    value: '{{ default "" .Values.debug }}'
 
 volumeMounts:
   - name: secrets-volume
