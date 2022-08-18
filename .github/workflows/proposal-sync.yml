@@ -1,6 +1,14 @@
 name: proposal-sync
 
 on:  
+  workflow_dispatch: 
+    inputs:
+      submodule_commit:
+        description: 'Commit of the submodule to deploy'     
+        required: false
+      commit: 
+        description: 'Commit of the CI repo to deploy'     
+        required: false
   pull_request:
     branches: [ main ]
   push:
@@ -12,6 +20,9 @@ jobs:
 
   set_env: 
     uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.environment.yml@main
+    with: 
+      commit: ${{ github.event.inputs.commit }}
+      submodule_commit: ${{ github.event.inputs.submodule_commit }}
 
   check_changed:
     needs: set_env
@@ -23,13 +34,17 @@ jobs:
         helm_configs/proposal-sync/values.yaml
         scilog/sdk/python/**
         scilog/importTools/**
+      commit: ${{ needs.set_env.outputs.commit }}
+      submodule_commit: ${{ github.event.inputs.submodule_commit }}
+      submodule: scilog
+
 
   build_deploy:
     if: (needs.check_changed.outputs.changed == 'true' && !needs.set_env.outputs.component) || needs.set_env.outputs.component == 'ps'
     needs: 
      - check_changed
      - set_env
-    uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.build-deploy-scicat-component.yml@main
+    uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.build-deploy.yml@main
     with: 
       context: scilog/importTools/.
       image_name: ${{ github.repository }}/proposal-sync
@@ -38,6 +53,9 @@ jobs:
       tag: ${{ needs.set_env.outputs.tag }}
       environment: ${{ needs.set_env.outputs.environment }}
       helm_chart: cron_chart
+      commit: ${{ needs.set_env.outputs.commit }}
+      submodule_commit: ${{ github.event.inputs.submodule_commit }}
+      submodule: scilog
     secrets:
       KUBECONFIG: ${{ secrets.KUBECONFIG }}
       JSON_SECRETS: ${{ toJSON(secrets) }}

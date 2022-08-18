@@ -19,14 +19,14 @@ on:
 jobs:
 
   set_env: 
-    uses: ./.github/workflows/reusable.environment.yml
+    uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.environment.yml@main
     with: 
       commit: ${{ github.event.inputs.commit }}
       submodule_commit: ${{ github.event.inputs.submodule_commit }}
 
   check_changed:
     needs: set_env
-    uses: ./.github/workflows/reusable.changes.yml
+    uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.changes.yml@main
     with: 
       files: | 
         .github/workflows/fe.yml
@@ -42,7 +42,7 @@ jobs:
     needs: 
      - check_changed
      - set_env
-    uses: ./.github/workflows/reusable.build-deploy.yml
+    uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.build-deploy.yml@main
     with: 
       context: scilog/scilog/.
       image_name: ${{ github.repository }}/fe
