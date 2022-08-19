@@ -1,8 +1,5 @@
 # scilog-ci
-CI configuration to deploy SciLog server
-
-# scilog-ci
-CI related information to deploy scilog
+CI configuration to deploy SciLog
 
 # Deployment behaviour
 The CI is responsible for deploying the scilog components in the k8s clusters (one for `development`, another for `qa` and `production`), based on some rules.
