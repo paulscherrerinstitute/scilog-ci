@@ -16,6 +16,10 @@ spec:
             {{- include "helm_chart.selectorLabels" . | nindent 12 }}
         spec:
           restartPolicy: {{ .Values.cronjob.restartPolicy }}
+          {{- with .Values.initContainers }}
+          initContainers:
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
           containers:
           - name: {{ include "helm_chart.fullname" . }}
             image: {{ tpl .Values.image.repository $ }}:{{ tpl .Values.image.tag $ }}
