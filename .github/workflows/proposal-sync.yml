@@ -38,12 +38,40 @@ jobs:
       submodule_commit: ${{ github.event.inputs.submodule_commit }}
       submodule: scilog
 
+  set_ci_vars:
+    if: (needs.check_changed.outputs.changed == 'true' && !needs.set_env.outputs.component) || needs.set_env.outputs.component == 'ps'
+    runs-on: ubuntu-latest
+    needs: 
+      - check_changed
+      - set_env
+    outputs:
+      ciVars: ${{ steps.helm_vars.outputs.ciVars }}
+
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+        ref: ${{ needs.set_env.outputs.commit }}
+
+    - name: Set helm vars
+      id: helm_vars
+      run: |
+        ciVars=$(cat <<EOF
+          {
+            "SCILOG_DEFAULT_LOGBOOK_ICON": $(jq -R -s < helm_configs/proposal-sync/default_logbook_icon.jpg)
+          }
+        EOF
+        )
+        echo "::set-output name=ciVars::$(echo $ciVars)"
 
   build_deploy:
     if: (needs.check_changed.outputs.changed == 'true' && !needs.set_env.outputs.component) || needs.set_env.outputs.component == 'ps'
     needs: 
      - check_changed
      - set_env
+     - set_ci_vars
     uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.build-deploy.yml@main
     with: 
       context: scilog/importTools/.
@@ -51,6 +79,7 @@ jobs:
       release_name: proposal-sync
       namespace_prefix: scilog-
       tag: ${{ needs.set_env.outputs.tag }}
+      helm_ci_vars: ${{ needs.set_ci_vars.outputs.ciVars }}
       environment: ${{ needs.set_env.outputs.environment }}
       helm_chart: cron_chart
       commit: ${{ needs.set_env.outputs.commit }}
