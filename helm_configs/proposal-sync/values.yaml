@@ -13,8 +13,25 @@ volumes:
   - name: secrets-volume
     secret:
       secretName: "{{ .Release.Name }}-s"
+  - name: downloaddir
+    emptyDir: {}
 
 volumeMounts:
   - name: secrets-volume
     mountPath: /usr/src/app/.env
     subPath: .env
+  - name: downloaddir
+    mountPath: /usr/src/app/default_logbook_icon.jpg
+    subPath: default_logbook_icon.jpg
+
+initContainers:
+  - name: install
+    image: busybox
+    command:
+      - wget
+      - "-O"
+      - "/download-dir/default_logbook_icon.jpg"
+      - https://raw.githubusercontent.com/paulscherrerinstitute/scilog/main/sci-log-db/src/scilog_config_PSI/default_logbook_icon.jpg
+    volumeMounts:
+      - name: downloaddir
+        mountPath: "/download-dir"
