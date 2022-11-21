@@ -44,6 +44,8 @@ secrets:
 env:
   - name: BASE_PATH
     value: /api/v1
+  - name: JWT_ACCESS_TOKEN_EXPIRES_IN
+    value: '1.21e+6'
   - name: JWT_SECRET
     valueFrom:
       secretKeyRef: 
