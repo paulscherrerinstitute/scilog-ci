@@ -64,3 +64,8 @@ volumeMounts:
   - name: secrets-volume
     mountPath: /home/node/app/functionalAccounts.json
     subPath: functionalAccounts.json
+
+probeChecks:
+  periodSeconds: 20
+  timeoutSeconds: 5
+  failureThreshold: 5 
