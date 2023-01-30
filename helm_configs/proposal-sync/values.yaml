@@ -26,12 +26,16 @@ volumeMounts:
 
 initContainers:
   - name: install
-    image: busybox
+    image: alpine
     command:
-      - wget
-      - "-O"
-      - "/download-dir/default_logbook_icon.jpg"
-      - https://raw.githubusercontent.com/paulscherrerinstitute/scilog/main/sci-log-db/src/scilog_config_PSI/default_logbook_icon.jpg
+      - "/bin/sh"
+      - -c
+    args:
+      - >-
+        apk update && apk add ca-certificates && update-ca-certificates;
+        wget
+        -O /download-dir/default_logbook_icon.jpg
+        https://raw.githubusercontent.com/paulscherrerinstitute/scilog/main/sci-log-db/src/scilog_config_PSI/default_logbook_icon.jpg;
     volumeMounts:
       - name: downloaddir
         mountPath: "/download-dir"
