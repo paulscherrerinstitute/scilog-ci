@@ -30,8 +30,8 @@ jobs:
     with: 
       files: | 
         .github/workflows/proposal-sync.yml
-        helm_configs/proposal-sync/${{ needs.set_env.outputs.environment }}/**
-        helm_configs/proposal-sync/values.yaml
+        helm/configs/proposal-sync/${{ needs.set_env.outputs.environment }}/**
+        helm/configs/proposal-sync/values.yaml
         scilog/sdk/python/**
         scilog/importTools/**
       commit: ${{ needs.set_env.outputs.commit }}
@@ -51,7 +51,7 @@ jobs:
       namespace_prefix: scilog-
       tag: ${{ needs.set_env.outputs.tag }}
       environment: ${{ needs.set_env.outputs.environment }}
-      helm_chart: cron_chart
+      helm_chart: helm/charts/cron_chart
       commit: ${{ needs.set_env.outputs.commit }}
       submodule_commit: ${{ github.event.inputs.submodule_commit }}
       submodule: scilog
