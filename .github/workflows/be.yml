@@ -30,8 +30,8 @@ jobs:
     with: 
       files: | 
         .github/workflows/be.yml
-        helm_configs/backend/${{ needs.set_env.outputs.environment }}/**
-        helm_configs/backend/values.yaml
+        helm/configs/backend/${{ needs.set_env.outputs.environment }}/**
+        helm/configs/backend/values.yaml
         scilog/sci-log-db/**
       commit: ${{ needs.set_env.outputs.commit }}
       submodule_commit: ${{ github.event.inputs.submodule_commit }}
