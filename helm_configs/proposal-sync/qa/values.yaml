@@ -1,3 +1,0 @@
-cronjob:
-  restartPolicy: OnFailure
-  schedule: 30 5 * * 4
