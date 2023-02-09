@@ -6,6 +6,6 @@ config: |
     "oAuth2Endpoint": {
         "authURL": "auth/thirdparty/keycloak",
         "displayText": "PSI User Login",
-        "toolTipText": "...like any normal user connected to your identity management system. Note that you may be redirected to an identity provider"
+        "toolTipText": "...like any normal user, including EACCOUNTS, connected to your identity management system. Note that you may be redirected to an identity provider"
     }
   }
