@@ -4,7 +4,7 @@ config: |
   {
     "lbBaseURL": "https://scilog.qa.psi.ch/api/v1/",
     "oAuth2Endpoint": {
-        "authURL": "auth/thirdparty/keycloak",
+        "authURL": "auth/keycloak",
         "displayText": "PSI account",
         "toolTipText": "...like any normal user, including e-accounts, connected to your identity management system. Note that you may be redirected to an identity provider"
     }
