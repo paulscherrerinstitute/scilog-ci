@@ -36,10 +36,10 @@ secrets:
   "{{ .Release.Name }}-s":
     type: Opaque
     data: 
-      datasource.json: '${{ secrets.DATASOURCE }}'
-      oidc.json: '${{ secrets.OIDC }}'
-      functionalAccounts.json: '${{ secrets.FUNCTIONAL_ACCOUNTS }}'
-      jwt_secret: '${{ secrets.JWT_SECRET }}'
+      datasource.json: "{{ .Values.secretsJson.DATASOURCE }}"
+      oidc.json: "{{ .Values.secretsJson.OIDC }}"
+      functionalAccounts.json: "{{ .Values.secretsJson.FUNCTIONAL_ACCOUNTS }}"
+      jwt_secret: "{{ .Values.secretsJson.JWT_SECRET }}"
 
 env:
   - name: BASE_PATH
