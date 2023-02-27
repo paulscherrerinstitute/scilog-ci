@@ -55,4 +55,3 @@ jobs:
       submodule: scilog
     secrets:
       KUBECONFIG: ${{ secrets.KUBECONFIG }}
-      JSON_SECRETS: ${{ toJSON(secrets) }}
