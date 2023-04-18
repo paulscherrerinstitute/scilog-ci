@@ -54,6 +54,8 @@ env:
         key: jwt_secret
   - name: DEBUG
     value: '{{ default "" .Values.debug }}'
+  - name: CHROME_BIN
+    value : /usr/bin/chromium
 
 volumeMounts:
   - name: secrets-volume
