@@ -41,6 +41,7 @@ secrets:
       oidc.json: "{{ .Values.secretsJson.OIDC }}"
       functionalAccounts.json: "{{ .Values.secretsJson.FUNCTIONAL_ACCOUNTS }}"
       jwt_secret: "{{ .Values.secretsJson.JWT_SECRET }}"
+      session_secret: "{{ .Values.secretsJson.SESSION_SECRET }}"
 
 env:
   - name: BASE_PATH
@@ -56,6 +57,13 @@ env:
     value: '{{ default "" .Values.debug }}'
   - name: CHROME_BIN
     value : /usr/bin/chromium
+  - name: SESSION_STORE_BUILDER
+    value : "true"
+  - name: SESSION_SECRET
+    valueFrom:
+      secretKeyRef: 
+        name: "{{ .Release.Name }}-s"
+        key: session_secret
 
 volumeMounts:
   - name: secrets-volume
