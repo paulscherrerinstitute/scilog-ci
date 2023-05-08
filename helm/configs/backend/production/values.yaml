@@ -1,1 +1,3 @@
 host: scilog.psi.ch
+replicas: 2
+sessionStoreBuilder: "true"

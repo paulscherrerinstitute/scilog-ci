@@ -1,8 +1,8 @@
-replicaCount: 2
+replicaCount: '{{ default 1 .Values.replicas }}'
 
 image:
   repository: "{{ .Values.ciRepository }}"
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   tag: "{{ .Values.ciTag }}"
 
 service:
@@ -58,7 +58,7 @@ env:
   - name: CHROME_BIN
     value : /usr/bin/chromium
   - name: SESSION_STORE_BUILDER
-    value : "true"
+    value : '{{ default "false" .Values.sessionStoreBuilder }}'
   - name: SESSION_SECRET
     valueFrom:
       secretKeyRef: 
