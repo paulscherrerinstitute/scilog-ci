@@ -1,4 +1,4 @@
-replicaCount: '{{ default 1 .Values.replicas }}'
+replicaCount: 1
 
 image:
   repository: "{{ .Values.ciRepository }}"
