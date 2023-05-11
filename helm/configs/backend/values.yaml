@@ -58,7 +58,7 @@ env:
   - name: CHROME_BIN
     value : /usr/bin/chromium
   - name: SESSION_STORE_BUILDER
-    value : '{{ default "false" .Values.sessionStoreBuilder }}'
+    value : '{{ default "" .Values.sessionStoreBuilder }}'
   - name: SESSION_SECRET
     valueFrom:
       secretKeyRef: 
