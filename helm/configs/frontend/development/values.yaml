@@ -3,6 +3,7 @@ host: scilog.development.psi.ch
 config: |
   {
     "lbBaseURL": "https://scilog.development.psi.ch/api/v1/",
+    "help": "https://paulscherrerinstitute.github.io/scilog/",
     "oAuth2Endpoint": {
         "authURL": "auth/keycloak",
         "displayText": "PSI account",
