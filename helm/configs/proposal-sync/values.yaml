@@ -7,7 +7,7 @@ secrets:
   "{{ .Release.Name }}-s":
     type: Opaque
     data: 
-      .env: "${{ .Values.secretsJson.PSYNC_ENV }}"
+      .env: "{{ .Values.secretsJson.PSYNC_ENV }}"
 
 volumes:
   - name: secrets-volume
