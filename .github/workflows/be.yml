@@ -42,7 +42,7 @@ jobs:
     needs: 
      - check_changed
      - set_env
-    uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.build-deploy.yml@main
+    uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.build-deploy.yml@bastion_ssh
     with: 
       context: scilog/sci-log-db/.
       image_name: ${{ github.repository }}/be
@@ -56,3 +56,5 @@ jobs:
     secrets:
       KUBECONFIG: ${{ secrets.KUBECONFIG }}
       JSON_SECRETS: ${{ toJSON(secrets) }}
+      BASTION_USER: ${{ secrets.BASTION_USER }}
+      BASTION_SSH_KEY: ${{ secrets.BASTION_SSH_KEY }}
