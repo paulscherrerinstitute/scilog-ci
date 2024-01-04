@@ -43,7 +43,7 @@ jobs:
     needs: 
      - check_changed
      - set_env
-    uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.build-deploy.yml@bastion_ssh
+    uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.build-deploy.yml@main
     with: 
       context: scilog/importTools/.
       image_name: ${{ github.repository }}/proposal-sync
