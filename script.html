@@ -1,0 +1,26 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Plot with Plotly</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<body>
+
+    <snippet-content _ngcontent-sxo-c59="" class="ng-tns-c59-8" _nghost-sxo-c58="" ng-reflect-snippet="[object Object]">
+        <div _ngcontent-sxo-c58="" class="snippet-content">
+            <div id="myPlot" style="width:100%;max-width:600px;height:400px;"></div>
+            <script>
+                var trace1 = {
+                    x: [1, 2, 3, 4, 5],
+                    y: [10, 15, 13, 17, 21],
+                    type: 'scatter'
+                };
+
+                var data = [trace1];
+
+                Plotly.newPlot('myPlot', data);
+            </script>
+        </div>
+    </snippet-content>
+</body>
