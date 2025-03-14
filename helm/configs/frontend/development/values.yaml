@@ -16,3 +16,4 @@ config: |
         "toolTipText": "...like any normal user, including e-accounts, connected to your identity management system. Note that you may be redirected to an identity provider"
     }
   }
+
