@@ -13,55 +13,62 @@ service:
 
 ingress:
   enabled: true
-  annotations: 
+  annotations:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/proxy-body-size: 50m
     nginx.ingress.kubernetes.io/proxy-buffer-size: 8k
   hosts:
     - host: "{{ .Values.host }}"
-      paths: 
+      paths:
         - path: /api
           pathType: Prefix
   tls:
     - hosts:
-      - "{{ .Values.host }}"
+        - "{{ .Values.host }}"
       secretName: "scilog-certificate"
 
 volumes:
   - name: secrets-volume
     secret:
       secretName: "{{ .Release.Name }}-s"
+  - name: config-volume
+    configMap:
+      name: "{{ .Release.Name }}-cm"
 
-secrets: 
+secrets:
   "{{ .Release.Name }}-s":
     type: Opaque
-    data: 
+    data:
       datasource.json: "{{ .Values.secretsJson.DATASOURCE }}"
       oidc.json: "{{ .Values.secretsJson.OIDC }}"
       functionalAccounts.json: "{{ .Values.secretsJson.FUNCTIONAL_ACCOUNTS }}"
       jwt_secret: "{{ .Values.secretsJson.JWT_SECRET }}"
       session_secret: "{{ .Values.secretsJson.SESSION_SECRET }}"
 
+configMaps:
+  "{{ .Release.Name }}-cm":
+    roles.js: "{{ .Values.ROLES_JS }}"
+
 env:
   - name: BASE_PATH
     value: /api/v1
   - name: JWT_ACCESS_TOKEN_EXPIRES_IN
-    value: '1.21e+6'
+    value: "1.21e+6"
   - name: JWT_SECRET
     valueFrom:
-      secretKeyRef: 
+      secretKeyRef:
         name: "{{ .Release.Name }}-s"
         key: jwt_secret
   - name: DEBUG
     value: '{{ default "" .Values.debug }}'
   - name: CHROME_BIN
-    value : /usr/bin/chromium
+    value: /usr/bin/chromium
   - name: SESSION_STORE_BUILDER
-    value : "{{ .Values.sessionStoreBuilder }}"
+    value: "{{ .Values.sessionStoreBuilder }}"
   - name: SESSION_SECRET
     valueFrom:
-      secretKeyRef: 
+      secretKeyRef:
         name: "{{ .Release.Name }}-s"
         key: session_secret
 
@@ -75,8 +82,11 @@ volumeMounts:
   - name: secrets-volume
     mountPath: /home/node/app/functionalAccounts.json
     subPath: functionalAccounts.json
+  - name: config-volume
+    mountPath: /home/node/app/dist/authentication-strategies/roles.js
+    subPath: roles.js
 
 probeChecks:
   periodSeconds: 20
   timeoutSeconds: 5
-  failureThreshold: 5 
+  failureThreshold: 5
