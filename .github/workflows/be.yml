@@ -1,34 +1,33 @@
 name: be
 
-on:  
-  workflow_dispatch: 
+on:
+  workflow_dispatch:
     inputs:
       submodule_commit:
-        description: 'Commit of the submodule to deploy'     
+        description: "Commit of the submodule to deploy"
         required: false
-      commit: 
-        description: 'Commit of the CI repo to deploy'     
+      commit:
+        description: "Commit of the CI repo to deploy"
         required: false
   pull_request:
-    branches: [ main ]
+    branches: [main]
   push:
-    branches: [ main ]
+    branches: [main]
   release:
-    types: [ published ]
+    types: [published]
 
 jobs:
-
-  set_env: 
+  set_env:
     uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.environment.yml@main
-    with: 
+    with:
       commit: ${{ github.event.inputs.commit }}
       submodule_commit: ${{ github.event.inputs.submodule_commit }}
 
   check_changed:
     needs: set_env
     uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.changes.yml@main
-    with: 
-      files: | 
+    with:
+      files: |
         .github/workflows/be.yml
         helm/configs/backend/${{ needs.set_env.outputs.environment }}/**
         helm/configs/backend/values.yaml
@@ -39,11 +38,11 @@ jobs:
 
   build_deploy_be:
     if: (needs.check_changed.outputs.changed == 'true' && !needs.set_env.outputs.component) || needs.set_env.outputs.component == 'be'
-    needs: 
-     - check_changed
-     - set_env
+    needs:
+      - check_changed
+      - set_env
     uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.build-deploy.yml@main
-    with: 
+    with:
       context: scilog/sci-log-db/.
       image_name: ${{ github.repository }}/be
       release_name: backend
@@ -53,6 +52,8 @@ jobs:
       commit: ${{ needs.set_env.outputs.commit }}
       submodule_commit: ${{ github.event.inputs.submodule_commit }}
       submodule: scilog
+      helm_set_files: >-
+        ROLES_JS=helm/configs/backend/roles.js
     secrets:
       KUBECONFIG: ${{ secrets.KUBECONFIG }}
       JSON_SECRETS: ${{ toJSON(secrets) }}
