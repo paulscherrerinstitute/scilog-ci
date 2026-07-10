@@ -31,7 +31,7 @@ jobs:
         .github/workflows/be.yml
         helm/configs/backend/${{ needs.set_env.outputs.environment }}/**
         helm/configs/backend/values.yaml
-        scilog/sci-log-db/**
+        scilog/api/**
       commit: ${{ needs.set_env.outputs.commit }}
       submodule_commit: ${{ github.event.inputs.submodule_commit }}
       submodule: scilog
@@ -43,7 +43,7 @@ jobs:
       - set_env
     uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.build-deploy.yml@main
     with:
-      context: scilog/sci-log-db/.
+      context: scilog/api/.
       image_name: ${{ github.repository }}/be
       release_name: backend
       namespace_prefix: scilog-
