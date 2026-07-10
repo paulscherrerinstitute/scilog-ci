@@ -35,7 +35,7 @@ initContainers:
         apk update && apk add ca-certificates && update-ca-certificates;
         wget
         -O /download-dir/default_logbook_icon.jpg
-        https://raw.githubusercontent.com/paulscherrerinstitute/scilog/main/sci-log-db/src/scilog_config_PSI/default_logbook_icon.jpg;
+        https://raw.githubusercontent.com/paulscherrerinstitute/scilog/main/api/src/scilog_config_PSI/default_logbook_icon.jpg;
     volumeMounts:
       - name: downloaddir
         mountPath: "/download-dir"

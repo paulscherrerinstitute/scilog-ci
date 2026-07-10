@@ -32,7 +32,7 @@ jobs:
         .github/workflows/fe.yml
         helm/configs/frontend/${{ needs.set_env.outputs.environment }}/**
         helm/configs/frontend/values.yaml
-        scilog/scilog/**
+        scilog/web/**
       commit: ${{ needs.set_env.outputs.commit }}
       submodule_commit: ${{ github.event.inputs.submodule_commit }}
       submodule: scilog
@@ -44,7 +44,7 @@ jobs:
      - set_env
     uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.build-deploy.yml@main
     with: 
-      context: scilog/scilog/.
+      context: scilog/web/.
       image_name: ${{ github.repository }}/fe
       release_name: frontend
       namespace_prefix: scilog-
