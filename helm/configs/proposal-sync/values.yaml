@@ -39,3 +39,7 @@ initContainers:
     volumeMounts:
       - name: downloaddir
         mountPath: "/download-dir"
+
+# Keep the pre-rename chart name so resource names stay stable for the
+# release installed from the vendored cron-chart.
+nameOverride: cron-chart
