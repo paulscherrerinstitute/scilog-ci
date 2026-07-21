@@ -49,6 +49,8 @@ jobs:
       namespace_prefix: scilog-
       tag: ${{ needs.set_env.outputs.tag }}
       environment: ${{ needs.set_env.outputs.environment }}
+      helm_chart: oci://ghcr.io/paulscherrerinstitute/dc-charts/generic-service
+      helm_chart_version: 1.0.0
       commit: ${{ needs.set_env.outputs.commit }}
       submodule_commit: ${{ github.event.inputs.submodule_commit }}
       submodule: scilog
