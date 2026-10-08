@@ -8,6 +8,10 @@ config: |
       "authURL": "auth/keycloak",
       "displayText": "PSI account",
         "toolTipText": "...like any normal user, including e-accounts, connected to your identity management system. Note that you may be redirected to an identity provider"
+    },
+    "scicat": {
+      "scicatWidgetEnabled": true,
+      "lbBaseURL": "https://dacat.psi.ch",
+      "frontendBaseURL": "https://discovery.psi.ch"
     }
-
   }
