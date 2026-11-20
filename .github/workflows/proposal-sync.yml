@@ -32,8 +32,7 @@ jobs:
         .github/workflows/proposal-sync.yml
         helm/configs/proposal-sync/${{ needs.set_env.outputs.environment }}/**
         helm/configs/proposal-sync/values.yaml
-        scilog/sdk/python/**
-        scilog/importTools/**
+        proposal-sync/**
       commit: ${{ needs.set_env.outputs.commit }}
       submodule_commit: ${{ github.event.inputs.submodule_commit }}
       submodule: scilog
@@ -45,7 +44,7 @@ jobs:
      - set_env
     uses: paulscherrerinstitute/scicat-ci/.github/workflows/reusable.build-deploy.yml@main
     with: 
-      context: scilog/importTools/.
+      context: proposal-sync/.
       image_name: ${{ github.repository }}/proposal-sync
       release_name: proposal-sync
       namespace_prefix: scilog-
