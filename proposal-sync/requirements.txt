@@ -3,5 +3,5 @@ charset-normalizer==2.1.1
 idna==3.20
 python-dotenv==0.20.0
 requests==2.34.2
-scilog~=2.0
+scilog~=4.4
 urllib3==1.26.20
